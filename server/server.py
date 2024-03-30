@@ -135,8 +135,9 @@ def mint_coin(wallet):
 
 @app.route('/vision1', methods=['POST'])
 def vision1():
-    data = {"message": "https://media.istockphoto.com/photos/shirt-picture-id621353422?k=6&m=621353422&s=612x612&w=0&h=2xfhs4LSjRGO52x4Ky3cphTcteUjnUD-cUo_rveoJlQ="}
-
+    id = request.get_json().get('id')
+    print(id)
+    data = {"message": f"https://slo-fashion.s3.us-east-2.amazonaws.com/{id}.jpg"}
     response = open_client.chat.completions.create(
         model="gpt-4-vision-preview",
         messages=[
@@ -163,28 +164,21 @@ color
     
     item_json = response.choices[0].message.content
 
-    print(item_json)
-
     start_index = item_json.find("[")
     end_index = item_json.rfind("]")
     json_part = item_json[start_index:end_index + 1]
 
-    print(json_part)
-
     item = json.loads(json_part)
-
-    print(item)
 
     return item
 
 
-# @app.route('/vision', methods=['POST'] )
-@app.route('/vision2')
+@app.route('/vision2', methods=['POST'])
 def vision2():
-    # data = request.get_json()
-    data = {
-        "message": "https://fashinnovation.nyc/wp-content/uploads/2021/08/Everything-You-Need-To-Know-About-The-Clothing-Label-1.jpg"
-    }
+    id = request.get_json().get('id')
+    print(id)
+    data = {"message": f"https://slo-fashion.s3.us-east-2.amazonaws.com/{id}.jpg"}
+
     response = open_client.chat.completions.create(
         model="gpt-4-vision-preview",
         messages=[
