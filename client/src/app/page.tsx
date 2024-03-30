@@ -10,6 +10,7 @@ export default function Home() {
   return (
     <div className="bg-gray-100 min-h-screen flex items-center justify-center">
       <div className="container mx-auto px-4 py-12 bg-cover bg-center bg-gradient-to-r from-green-400 to-blue-500 rounded-lg shadow-lg">
+      <h1 className="text-4xl font-bold text-center mb-8">Seamlessly connecting consumers to suppliers for eco-friendly clothing recycling.</h1>
         <Header />
     
 
@@ -18,7 +19,7 @@ export default function Home() {
 
           {/* Sustainable Fashion */}
           <Link href="/sustainable-fashion">
-            <div className="group rounded-lg overflow-hidden relative">
+            <div className="group rounded-full overflow-hidden relative w-64 h-64" style={{ position: 'relative', left: '50px', top: '-50px' }}>
               <Image src={require("../../assets/sustainable-fashion.jpg")} alt="Sustainable Fashion" className="w-full h-auto transition-transform group-hover:scale-105" />
               <div className="absolute inset-0 bg-black opacity-40 transition-opacity group-hover:opacity-60"></div>
               <div className="absolute inset-0 flex items-center justify-center">
@@ -29,7 +30,7 @@ export default function Home() {
 
           {/* Recycling Initiatives */}
           <Link href="/recycling-initiatives">
-            <div className="group rounded-lg overflow-hidden relative">
+            <div className="group rounded-full overflow-hidden relative w-64 h-64" style={{ position: 'relative', left: '10px', top: '80px' }}>
               <Image src={require("../../assets/recycling-initiative.jpg")} alt="Recycling Initiatives" className="w-full h-auto transition-transform group-hover:scale-105" />
               <div className="absolute inset-0 bg-black opacity-40 transition-opacity group-hover:opacity-60"></div>
               <div className="absolute inset-0 flex items-center justify-center">
@@ -40,7 +41,7 @@ export default function Home() {
 
           {/* Eco-friendly Products */}
           <Link href="/eco-friendly-products">
-            <div className="group rounded-lg overflow-hidden relative">
+            <div className="group rounded-full overflow-hidden relative w-64 h-64" style={{ position: 'relative', left: '0', top: '0' }}>
               <Image src={require("../../assets/Eco-friendly-fashion.jpg")} alt="Eco-friendly Fashion" className="w-full h-auto transition-transform group-hover:scale-105" />
               <div className="absolute inset-0 bg-black opacity-40 transition-opacity group-hover:opacity-60"></div>
               <div className="absolute inset-0 flex items-center justify-center">
@@ -52,6 +53,6 @@ export default function Home() {
           </main>
       </div>
       </div>
-    //</main>
+
   );
 }
