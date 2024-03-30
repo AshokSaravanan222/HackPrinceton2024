@@ -8,18 +8,17 @@ load_dotenv()
 verb_api_key = os.getenv("VERBWIRE_API_KEY")
 
 
-url = "https://api.verbwire.com/v1/nft/send/enableCrossChainSend"
+url = "https://api.verbwire.com/v1/nft/mint/quickMintFromMetadataUrl"
 
-payload = "-----011000010111000001101001\r\nContent-Disposition: form-data; name=\"sourceChain\"\r\n\r\npolygon\r\n-----011000010111000001101001\r\nContent-Disposition: form-data; name=\"destChain\"\r\n\r\npolygon\r\n-----011000010111000001101001\r\nContent-Disposition: form-data; name=\"destContractAddress\"\r\n\r\n0xFc32A51A4a6659bfeC783D443d8B4ae5d95101F0\r\n-----011000010111000001101001\r\nContent-Disposition: form-data; name=\"sourceContractAddress\"\r\n\r\n0xB75B6F30898b46D96b70eC91ED1172D5bdDFf94B\r\n-----011000010111000001101001--\r\n\r\n"
+payload = "-----011000010111000001101001\r\nContent-Disposition: form-data; name=\"allowPlatformToOperateToken\"\r\n\r\ntrue\r\n-----011000010111000001101001\r\nContent-Disposition: form-data; name=\"chain\"\r\n\r\npolygon\r\n-----011000010111000001101001\r\nContent-Disposition: form-data; name=\"metadataUrl\"\r\n\r\nhttps://cloudflare-ipfs.com/ipfs/bafyreic4h7kir7vnq5dfcu4dnvge6el5awnnvbimyqa53abhlau2pbcop4/metadata.json\r\n-----011000010111000001101001\r\nContent-Disposition: form-data; name=\"recipientAddress\"\r\n\r\n{wallet}\r\n-----011000010111000001101001--\r\n\r\n"
 headers = {
     "accept": "application/json",
     "content-type": "multipart/form-data; boundary=---011000010111000001101001",
     "X-API-Key": verb_api_key
 }
-
 response = requests.post(url, data=payload, headers=headers)
-
 print(response.text)
+
 
 
 
