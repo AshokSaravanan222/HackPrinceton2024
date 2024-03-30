@@ -18,14 +18,12 @@ const Header: React.FC = () => {
             <text className="px-4 py-2 bg-blue-500 text-white rounded-lg">Wardrobe</text>
           </Link>
         );
-      case '/wardrobe':
-        return (
-          <Link href="/">
-            <text className="px-4 py-2 bg-blue-500 text-white rounded-lg">Home</text>
-          </Link>
-        );
       default:
-        return null;
+        return (
+            <Link href="/">
+              <text className="px-4 py-2 bg-blue-500 text-white rounded-lg">Home</text>
+            </Link>
+          );
     }
   };
 
