@@ -87,6 +87,24 @@ records = db.wardrobe_database
 # def api():
 #     return jsonify({'message': 'Hello, World!'})
 
+@app.route('/count_coins', methods=['GET'])
+def count_coins():
+    wallet = request.json['wallet']
+    count = 0 
+    url = f"https://api.verbwire.com/v1/nft/data/owned?walletAddress={wallet}&chain=sepolia&tokenType=nft721&sortDirection=ASC&limit=1000&page=1"
+    headers = {
+        "accept": "application/json",
+        "X-API-Key": verb_api_key
+    }
+    response = requests.get(url, headers=headers)
+    res_json = json.loads(response.text)
+
+    if "nfts" in res_json:
+        for nft in res_json["nfts"]:
+            if nft['tokenSymbol'] == "SHOPTEST":
+                count += 1
+    return count
+
 @app.route('/give_coin', methods=['POST'])
 def give_coin():
     wallet = request.json['wallet']
@@ -135,8 +153,8 @@ def mint_coin(wallet):
 
 @app.route('/vision1', methods=['POST'])
 def vision1():
-    data = {"message": "https://media.istockphoto.com/photos/shirt-picture-id621353422?k=6&m=621353422&s=612x612&w=0&h=2xfhs4LSjRGO52x4Ky3cphTcteUjnUD-cUo_rveoJlQ="}
-
+    id = request.get_json().get('id')
+    data = {"message": f"https://slo-fashion.s3.us-east-2.amazonaws.com/{id}.jpg"}
     response = open_client.chat.completions.create(
         model="gpt-4-vision-preview",
         messages=[
@@ -157,35 +175,26 @@ color
                 },
             ],
             }
-        ],
-        max_tokens=300,
+        ]
     )
     
     item_json = response.choices[0].message.content
-
-    print(item_json)
 
     start_index = item_json.find("[")
     end_index = item_json.rfind("]")
     json_part = item_json[start_index:end_index + 1]
 
-    print(json_part)
-
     item = json.loads(json_part)
-
-    print(item)
 
     return item
 
 
-# @app.route('/vision', methods=['POST'] )
-@app.route('/vision2')
+@app.route('/vision2', methods=['POST'])
 def vision2():
-    # data = request.get_json()
-    data = {
-        "message": "https://fashinnovation.nyc/wp-content/uploads/2021/08/Everything-You-Need-To-Know-About-The-Clothing-Label-1.jpg"
-    }
-    response = open_client.chat.completions.create(
+    id2 = request.get_json().get('id')
+    data2 = {"message": f"https://slo-fashion.s3.us-east-2.amazonaws.com/{id2}.jpg"}
+
+    response2 = open_client.chat.completions.create(
         model="gpt-4-vision-preview",
         messages=[
             {
@@ -203,22 +212,21 @@ sustainability_description
                 {
                 "type": "image_url",
                 "image_url": {
-                    "url": data['message'],
+                    "url": data2['message'],
                 },
                 },
             ],
             }
-        ],
-        max_tokens=300,
+        ]
     )
 
-    tag_json = response.choices[0].message.content
+    tag_json = response2.choices[0].message.content
 
-    start_index = tag_json.find("[")
-    end_index = tag_json.rfind("]")
-    json_part = tag_json[start_index:end_index + 1]
+    start_index2 = tag_json.find("[")
+    end_index2 = tag_json.rfind("]")
+    json_part2 = tag_json[start_index2:end_index2 + 1]
 
-    tag = json.loads(json_part)
+    tag = json.loads(json_part2)
 
     return tag
 
