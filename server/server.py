@@ -13,6 +13,7 @@ open_api_key = os.getenv("OPENAI_API_KEY")
 client = OpenAI(api_key=open_api_key)
 app = Flask(__name__)
 
+# the mongodb database record
 client=MongoClient("mongodb+srv://hackprinceton:<password>@cluster0.vgfyxhl.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
 
 db= client.get_database('wardrobe_record')
