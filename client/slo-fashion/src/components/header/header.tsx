@@ -2,29 +2,28 @@
 import React, { useState } from 'react';
 import { useUser } from '@auth0/nextjs-auth0/client';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation'
+import { usePathname } from 'next/navigation';
 
 const Header: React.FC = () => {
-  const [isLeftModalOpen, setLeftModalOpen] = useState(false);
-    const [isRightModalOpen, setRightModalOpen] = useState(false);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const { user } = useUser();
-  const pathname = usePathname()
+  const pathname = usePathname();
 
   // Function to render different icons based on the current route
   const renderIconForRoute = () => {
-    // Example paths, adjust according to your application's routes
     switch (pathname) {
       case '/':
-        return (<div>
-            <Link href="/wardrobe">
-              <text className="px-4 py-2 bg-blue-500 text-white rounded-lg">Wardrobe</text>
-            </Link></div>);
+        return (
+          <Link href="/wardrobe">
+            <text className="px-4 py-2 bg-blue-500 text-white rounded-lg">Wardrobe</text>
+          </Link>
+        );
       case '/wardrobe':
-        return (<div>
-            <Link href="/">
-              <text className="px-4 py-2 bg-blue-500 text-white rounded-lg">Home</text>
-            </Link></div>);
-      // Add more cases as needed
+        return (
+          <Link href="/">
+            <text className="px-4 py-2 bg-blue-500 text-white rounded-lg">Home</text>
+          </Link>
+        );
       default:
         return null;
     }
@@ -34,61 +33,30 @@ const Header: React.FC = () => {
     <>
       <div className="fixed inset-x-0 top-0 p-4 bg-gray-200 shadow-md">
         <div className="flex justify-between items-center">
-          {/* Left button or icon */}
-          
-
-          {/* Right button: Conditional rendering based on user login status */}
           {user ? (
             <>
             {renderIconForRoute()}
-              {/* If logged in, show Home button or user profile picture */}
-              <img
-                src={user.picture || 'path/to/default/avatar'}
-                alt="Profile"
-                className="w-10 h-10 rounded-full ml-4"
-                onClick={() => setRightModalOpen(true)}
-              />
+              <div className="relative" onClick={() => setIsDropdownOpen(!isDropdownOpen)}>
+                <img
+                  src={user.picture || 'path/to/default/avatar'}
+                  alt="Profile"
+                  className="w-10 h-10 rounded-full cursor-pointer"
+                />
+                {isDropdownOpen && (
+                  <div className="absolute right-0 mt-2 w-48 bg-white shadow-md rounded-md py-2">
+                    {/* Dropdown items */}
+                    <a href="/api/auth/logout" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Logout</a>
+                  </div>
+                )}
+              </div>
             </>
           ) : (
-            // If not logged in, show login button
             <Link href="/api/auth/login">
               <text className="px-4 py-2 bg-green-500 text-white rounded-lg">Login</text>
             </Link>
           )}
         </div>
       </div>
-
-      {/* Modals here */}
-      {/* Left Modal */}
-      {isLeftModalOpen && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
-          <div className="bg-white p-8 rounded-lg">
-            <h2 className="text-xl mb-4">Left Modal Content</h2>
-            <button
-              className="px-4 py-2 bg-red-500 text-white rounded-lg"
-              onClick={() => setLeftModalOpen(false)}
-            >
-              Close
-            </button>
-          </div>
-        </div>
-      )}
-
-      {/* Right Modal */}
-      {isRightModalOpen && (
-       <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
-       <div className="bg-white p-8 rounded-lg">
-         <h2 className="text-xl mb-4">User Actions</h2>
-         {/* Direct <a> tag for logout to cause a full page reload */}
-         <a
-           href="/api/auth/logout"
-           className="px-4 py-2 bg-red-500 text-white rounded-lg"
-         >
-           Logout
-         </a>
-       </div>
-     </div>
-      )}
     </>
   );
 };
