@@ -1,9 +1,14 @@
+'use client'
 import Link from "next/link";
+import Header from "@/components/header/header";
+import { useUser } from '@auth0/nextjs-auth0/client';
+
 export default function Home() {
+  const { user, error, isLoading } = useUser();
+
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <text>Home page</text>
-      <Link href="/wardrobe" className="px-4 py-2 bg-blue-500 text-white rounded-lg">Login</Link>
+      <Header />
       <div className="mb-32 grid text-center lg:max-w-5xl lg:w-full lg:mb-0 lg:grid-cols-4 lg:text-left">
         <a
           href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
