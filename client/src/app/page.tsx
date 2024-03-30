@@ -17,35 +17,35 @@ export default function Home() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {/* Sustainable Fashion */}
           <Link href="/sustainable-fashion">
-            <a className="group rounded-lg overflow-hidden relative">
+            <text className="group rounded-lg overflow-hidden relative">
               <img src="/images/sustainable-fashion.jpg" alt="Sustainable Fashion" className="w-full h-auto transition-transform group-hover:scale-105" />
               <div className="absolute inset-0 bg-black opacity-40 transition-opacity group-hover:opacity-60"></div>
               <div className="absolute inset-0 flex items-center justify-center">
                 <h2 className="text-xl font-semibold text-white transition-opacity opacity-0 group-hover:opacity-100">Sustainable Fashion</h2>
               </div>
-            </a>
+            </text>
           </Link>
 
           {/* Recycling Initiatives */}
           <Link href="/recycling-initiatives">
-            <a className="group rounded-lg overflow-hidden relative">
+            <text className="group rounded-lg overflow-hidden relative">
               <img src="/images/recycling-initiatives.jpg" alt="Recycling Initiatives" className="w-full h-auto transition-transform group-hover:scale-105" />
               <div className="absolute inset-0 bg-black opacity-40 transition-opacity group-hover:opacity-60"></div>
               <div className="absolute inset-0 flex items-center justify-center">
                 <h2 className="text-xl font-semibold text-white transition-opacity opacity-0 group-hover:opacity-100">Recycling Initiatives</h2>
               </div>
-            </a>
+            </text>
           </Link>
 
           {/* Eco-friendly Products */}
           <Link href="/eco-friendly-products">
-            <a className="group rounded-lg overflow-hidden relative">
+            <text className="group rounded-lg overflow-hidden relative">
               <img src="/images/eco-friendly-products.jpg" alt="Eco-friendly Products" className="w-full h-auto transition-transform group-hover:scale-105" />
               <div className="absolute inset-0 bg-black opacity-40 transition-opacity group-hover:opacity-60"></div>
               <div className="absolute inset-0 flex items-center justify-center">
                 <h2 className="text-xl font-semibold text-white transition-opacity opacity-0 group-hover:opacity-100">Eco-friendly Products</h2>
               </div>
-            </a>
+            </text>
           </Link>
           </div>
           </main>
