@@ -90,8 +90,6 @@ const Upload = () => {
   }
 
   useEffect(() => {
-    console.log(name);
-    console.log(label);
   }, [name, label]);
 
   return (
