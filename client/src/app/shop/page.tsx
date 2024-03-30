@@ -1,82 +1,43 @@
-import React from 'react'
+import React from 'react';
+import Image from 'next/image';
 
 const Shop = () => {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-    <text>Shop page</text>
-    
-    <div className="mb-32 grid text-center lg:max-w-5xl lg:w-full lg:mb-0 lg:grid-cols-4 lg:text-left">
-      <a
-        href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-        className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        <h2 className={`mb-3 text-2xl font-semibold`}>
-          Docs{" "}
-          <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-            -&gt;
-          </span>
-        </h2>
-        <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-          Find in-depth information about Next.js features and API.
-        </p>
-      </a>
+    <main className="flex flex-col items-center justify-center min-h-screen p-0 relative">
+      {/* Fixed or Absolute top content */}
+      <div className="w-full absolute top-0 p-4 flex items-center justify-between">
+        <div className="flex space-x-4">
+          <button className="p-2 bg-gray-400 text-black rounded text-3xl">Back</button>
+          <button className="p-2 bg-gray-400 text-black rounded text-3xl">Cart</button>
+        </div>
+        <div className="flex space-x-10">
+          <Image src={require("../../../assets/coin.png")} alt="Coin" width={50} height={50} />
+          <Image src={require("../../../assets/user_icon.png")} alt="User Icon" width={50} height={50} />
+        </div>
+      </div>
 
-      <a
-        href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-        className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        <h2 className={`mb-3 text-2xl font-semibold`}>
-          Learn{" "}
-          <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-            -&gt;
-          </span>
-        </h2>
-        <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-          Learn about Next.js in an interactive course with&nbsp;quizzes!
-        </p>
-      </a>
+      {/* Logo positioned within the flow but at the top, outside of the main centering context */}
+      <div className="self-start pt-2 w-full flex justify-center absolute top-0">
+        <Image src={require("../../../assets/princeton_logo.png")} alt="logo" width={150} height={150} />
+      </div>
 
-      <a
-        href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-        className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        <h2 className={`mb-3 text-2xl font-semibold`}>
-          Templates{" "}
-          <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-            -&gt;
-          </span>
-        </h2>
-        <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-          Explore starter templates for Next.js.
-        </p>
-      </a>
+      {/* Spacer div to ensure grid centers in remaining space - Adjust 'h' value as needed based on header size */}
+      <div className="flex-grow"></div>
 
-      <a
-        href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-        className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        <h2 className={`mb-3 text-2xl font-semibold`}>
-          Deploy{" "}
-          <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-            -&gt;
-          </span>
-        </h2>
-        <p className={`m-0 max-w-[30ch] text-sm opacity-50 text-balance`}>
-          Instantly deploy your Next.js site to a shareable URL with Vercel.
-        </p>
-        
-      </a>
-    </div>
-  </main>
-  )
+      {/* Grid content - Automatically centered within main due to flex-grow on spacer div */}
+      <div className="grid grid-cols-4 gap-10 w-full max-w-4xl">
+        <div className="bg-gray-200 p-4 rounded">Item 1</div>
+        <div className="bg-gray-200 p-4 rounded">Item 2</div>
+        <div className="bg-gray-200 p-4 rounded">Item 3</div>
+        <div className="bg-gray-200 p-4 rounded">Item 4</div>
+        {/* Add more items as needed */}
+      </div>
+
+      {/* Additional spacer div to balance flex-grow */}
+      <div className="flex-grow"></div>
+    </main>
+  );
 }
 
-export default Shop
+export default Shop;
+
