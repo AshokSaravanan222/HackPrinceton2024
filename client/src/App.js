@@ -1,24 +1,23 @@
 import logo from './logo.svg';
 import './App.css';
+import Home from './pages/Home';
+import Wardrobe from './pages/Wardrobe';
+import Recycle from './pages/Recycle';
+import Shop from './pages/Shop';
+import Upload from './pages/Upload';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          HELLO
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/wardrobe" element={<Wardrobe />} />
+        <Route path="/upload" element={<Upload />} />
+        <Route path="/recycle" element={<Recycle />} />
+        <Route path="/shop" element={<Shop />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
