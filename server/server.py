@@ -1,7 +1,15 @@
+from pymongo import MongoClient
+
 from flask import Flask, request, jsonify
 import requests
 
 app = Flask(__name__)
+
+client=MongoClient("mongodb+srv://hackprinceton:<password>@cluster0.vgfyxhl.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
+
+db= client.get_database('wardrobe_record')
+
+records=db.wardrobe_database
 
 class ClothingItem:
     def __init__(self, name, material, sustainability, brand):
