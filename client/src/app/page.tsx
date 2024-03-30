@@ -31,7 +31,8 @@ export default function Home() {
           {/* Recycling Initiatives */}
           <Link href="/recycling-initiatives">
             <text className="group rounded-lg overflow-hidden relative">
-              <img src="/images/recycling-initiatives.jpg" alt="Recycling Initiatives" className="w-full h-auto transition-transform group-hover:scale-105" />
+              <Image src={require("../../assets/recycling-initiative.jpg")} alt="Recycling Initiatives" className="w-full h-auto transition-transform group-hover:scale-105" />
+    
               <div className="absolute inset-0 bg-black opacity-40 transition-opacity group-hover:opacity-60"></div>
               <div className="absolute inset-0 flex items-center justify-center">
                 <h2 className="text-xl font-semibold text-white transition-opacity opacity-0 group-hover:opacity-100">Recycling Initiatives</h2>
@@ -42,7 +43,7 @@ export default function Home() {
           {/* Eco-friendly Products */}
           <Link href="/eco-friendly-products">
             <text className="group rounded-lg overflow-hidden relative">
-              <img src="/images/eco-friendly-products.jpg" alt="Eco-friendly Products" className="w-full h-auto transition-transform group-hover:scale-105" />
+              <Image src={require("../../assets/Eco-friendly-fashion.jpg")} alt="Eco-friendly Fashion" className="w-full h-auto transition-transform group-hover:scale-105" />
               <div className="absolute inset-0 bg-black opacity-40 transition-opacity group-hover:opacity-60"></div>
               <div className="absolute inset-0 flex items-center justify-center">
                 <h2 className="text-xl font-semibold text-white transition-opacity opacity-0 group-hover:opacity-100">Eco-friendly Products</h2>
