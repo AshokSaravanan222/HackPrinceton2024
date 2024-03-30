@@ -4,11 +4,12 @@ import Image from 'next/image';
 import { useUser } from '@auth0/nextjs-auth0/client';
 import Link from 'next/link';
 
-const Wardrobe = () => {
+const Tops = () => {
   const { user } = useUser();
+  
   return (
     <main className="flex min-h-screen flex-col items-center justify-center p-4 lg:p-24">
-      <h1 className="text-2xl font-bold mb-8">{user?.name}'s Wardrobe</h1>
+      <h1 className="text-2xl font-bold mb-8">Bottoms</h1>
 
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4 text-center">
         {/* Example of a card with a big image */}
@@ -17,7 +18,7 @@ const Wardrobe = () => {
           className="group block rounded-lg overflow-hidden shadow-lg hover:shadow-2xl transition-shadow duration-300"
         >
           <Image
-            src={require("../../../assets/top.jpg")}
+            src={require("../../../../assets/top.jpg")}
             alt="Tops"
             className="w-full h-64 object-cover"
           />
@@ -38,7 +39,7 @@ const Wardrobe = () => {
           className="group block rounded-lg overflow-hidden shadow-lg hover:shadow-2xl transition-shadow duration-300"
         >
           <Image
-            src={require("../../../assets/bottom.jpg")}
+            src={require("../../../../assets/bottom.jpg")}
             alt="Learn"
             className="w-full h-64 object-cover"
           />
@@ -58,4 +59,4 @@ const Wardrobe = () => {
   );
 };
 
-export default Wardrobe;
+export default Tops;

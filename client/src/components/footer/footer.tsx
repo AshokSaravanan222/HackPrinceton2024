@@ -1,13 +1,33 @@
 import React from 'react';
-import Link from 'next/link'; // Import Link from next/navigation
+import Link from 'next/link';
 
 const Footer: React.FC = () => {
   return (
-    <div className="fixed inset-x-0 bottom-0 p-4 bg-gray-200 shadow-md">
+    <div className="fixed inset-x-0 bottom-0 p-4 transparent shadow-lg">
       <div className="flex justify-around">
-        <Link href="/recycle" className="px-4 py-2 bg-blue-500 text-white rounded-lg">Recycle</Link>
-        <Link href="wardrobe" className="px-4 py-2 bg-green-500 text-white rounded-lg">Wardrobe</Link>
-        <Link href="/shop" className="px-4 py-2 bg-red-500 text-white rounded-lg">Shop</Link>
+        {/* Recycle Button */}
+        <Link
+          href="/recycle"
+          className="px-6 py-3 bg-blue-800 text-white rounded-lg shadow-md transition duration-150 ease-in-out hover:bg-blue-900"
+        >
+          Recycle
+        </Link>
+        
+        {/* Wardrobe Button */}
+        <Link
+          href="/wardrobe"
+          className="px-6 py-3 bg-green-600 text-white rounded-lg shadow-md transition duration-150 ease-in-out hover:bg-green-700"
+        >
+          Wardrobe
+        </Link>
+
+        {/* Shop Button - Adjusted to dark blue for consistency */}
+        <Link
+          href="/shop"
+          className="px-6 py-3 bg-blue-800 text-white rounded-lg shadow-md transition duration-150 ease-in-out hover:bg-blue-900"
+        >
+          Shop
+        </Link>
       </div>
     </div>
   );
