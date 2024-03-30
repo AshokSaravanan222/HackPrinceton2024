@@ -7,9 +7,50 @@ export default function Home() {
   const { user, error, isLoading } = useUser();
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
+    
+    //<main className="flex min-h-screen flex-col items-center justify-between p-24">
+   
+    <main className="bg-gray-100 min-h-screen">
       <Header />
-      <div className="mb-32 grid text-center lg:max-w-5xl lg:w-full lg:mb-0 lg:grid-cols-4 lg:text-left">
+
+      <main className="container mx-auto px-4 py-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {/* Sustainable Fashion */}
+          <Link href="/sustainable-fashion">
+            <a className="group rounded-lg overflow-hidden relative">
+              <img src="/images/sustainable-fashion.jpg" alt="Sustainable Fashion" className="w-full h-auto transition-transform group-hover:scale-105" />
+              <div className="absolute inset-0 bg-black opacity-40 transition-opacity group-hover:opacity-60"></div>
+              <div className="absolute inset-0 flex items-center justify-center">
+                <h2 className="text-xl font-semibold text-white transition-opacity opacity-0 group-hover:opacity-100">Sustainable Fashion</h2>
+              </div>
+            </a>
+          </Link>
+
+          {/* Recycling Initiatives */}
+          <Link href="/recycling-initiatives">
+            <a className="group rounded-lg overflow-hidden relative">
+              <img src="/images/recycling-initiatives.jpg" alt="Recycling Initiatives" className="w-full h-auto transition-transform group-hover:scale-105" />
+              <div className="absolute inset-0 bg-black opacity-40 transition-opacity group-hover:opacity-60"></div>
+              <div className="absolute inset-0 flex items-center justify-center">
+                <h2 className="text-xl font-semibold text-white transition-opacity opacity-0 group-hover:opacity-100">Recycling Initiatives</h2>
+              </div>
+            </a>
+          </Link>
+
+          {/* Eco-friendly Products */}
+          <Link href="/eco-friendly-products">
+            <a className="group rounded-lg overflow-hidden relative">
+              <img src="/images/eco-friendly-products.jpg" alt="Eco-friendly Products" className="w-full h-auto transition-transform group-hover:scale-105" />
+              <div className="absolute inset-0 bg-black opacity-40 transition-opacity group-hover:opacity-60"></div>
+              <div className="absolute inset-0 flex items-center justify-center">
+                <h2 className="text-xl font-semibold text-white transition-opacity opacity-0 group-hover:opacity-100">Eco-friendly Products</h2>
+              </div>
+            </a>
+          </Link>
+          </div>
+          </main>
+
+      {/* <div className="mb-32 grid text-center lg:max-w-5xl lg:w-full lg:mb-0 lg:grid-cols-4 lg:text-left">
         <a
           href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
           className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
@@ -78,7 +119,8 @@ export default function Home() {
           </p>
           
         </a>
-      </div>
+      </div> */}
+
     </main>
   );
 }
