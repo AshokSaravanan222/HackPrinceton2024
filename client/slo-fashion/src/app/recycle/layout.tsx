@@ -1,5 +1,7 @@
 import React from 'react';
 import Footer from "@/components/footer/footer"; // Import the Footer component
+import Header from "@/components/header/header"; // Adjust the import path as necessary
+
 
 export default function RecycleLayout({
   children, // will be a page or nested layout
@@ -8,6 +10,7 @@ export default function RecycleLayout({
 }) {
   return (
     <section>
+    <Header />
       {/* Include shared UI here e.g. a header or sidebar */}
       <nav></nav>
       {children} {/* This is where the content of the page will be injected */}
