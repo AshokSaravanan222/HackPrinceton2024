@@ -55,12 +55,14 @@ def add_clothes():
     _email = request.form['email']
     _name = request.form['name']
     _color = request.form['color']
+    _type = request.form['type']
     _image_url = request.form['image']
     _label = json.loads(request.form['label'])
 
     clothesItem = {
         "name": _name,
         "color": _color,
+        "type": _type,
         "image": _image_url,
         "label": _label
     }
@@ -200,6 +202,7 @@ f"""This is an image of a piece of clothing. Give it a simple but descriptive na
 Format the output as JSON surrounded by square brackets with following keys:
 clothing_name
 color 
+type: "top", "bottom", or "other"
 image_url: https://slo-fashion.s3.us-east-2.amazonaws.com/{id}.jpg
 label: None        
 """},
