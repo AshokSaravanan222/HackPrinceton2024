@@ -13,4 +13,12 @@ type GridContainerProps = {
     items: GridItemProps[];
   };
 
-export type { GridItemProps, GridContainerProps};
+  interface ClothingItem {
+    id: number;
+    name: string;
+    cost: number;
+    type: 'top' | 'bottom' | 'other';
+  }
+  
+
+export type { GridItemProps, GridContainerProps, ClothingItem};

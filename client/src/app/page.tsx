@@ -31,7 +31,7 @@ export default function Home() {
           {/* Recycling Initiatives */}
           <Link href="/recycling-initiatives">
             <div className="group rounded-full overflow-hidden relative w-64 h-64" style={{ position: 'relative', left: '20px', top: '40px' }}>
-              <Image src={require("../../assets/recycling-initiative.jpg")} alt="Recycling Initiatives" className="w-full h-auto transition-transform group-hover:scale-105" />
+              <Image src={require("../../assets/recycling-initiative.jpg")} alt="Recycling Initiatives" layout="fill" objectFit="cover" className="transition-transform group-hover:scale-105" />
               <div className="absolute inset-0 bg-black opacity-40 transition-opacity group-hover:opacity-60"></div>
               <div className="absolute inset-0 flex items-center justify-center">
                 <h2 className="text-xl font-semibold text-white transition-opacity opacity-0 group-hover:opacity-100">Recycling Initiatives</h2>
@@ -42,7 +42,7 @@ export default function Home() {
           {/* Eco-friendly Products */}
           <Link href="/eco-friendly-products">
             <div className="group rounded-full overflow-hidden relative w-64 h-64" style={{ position: 'relative', left: '10', top: '30' }}>
-              <Image src={require("../../assets/Eco-friendly-fashion.jpg")} alt="Eco-friendly Fashion" className="w-full h-auto transition-transform group-hover:scale-105" />
+              <Image src={require("../../assets/Eco-friendly-fashion.jpg")} alt="Eco-friendly Fashion" layout="fill" objectFit="cover" className="transition-transform group-hover:scale-105" />
               <div className="absolute inset-0 bg-black opacity-40 transition-opacity group-hover:opacity-60"></div>
               <div className="absolute inset-0 flex items-center justify-center">
                 <h2 className="text-xl font-semibold text-white transition-opacity opacity-0 group-hover:opacity-100">Eco-friendly Products</h2>
@@ -55,7 +55,12 @@ export default function Home() {
     <div className="bg-white w-full py-4 px-6 rounded-lg">
       <div className="container mx-auto text-center">
         <h2 className="text-xl text-black font-bold mb-2">About Us</h2>
-            <p className="text-base text-gray-700">Meet four enthusiast college students finding environmental, economical solution to the textile waste that is generated every year .</p>
+        <div className="overflow-auto max-h-32" style={{ scrollbarWidth: 'thin' }}>
+            <p className="text-base text-gray-700">Slo-Fashion, created by four enthusiastic college students, is dedicated to solve the fashion landfill waste problem and making recycling more convenient. We've made it our mission to collect your used outfits and get them into the hands of eco-friendly brands that give them a second chance. And here's the cool part: for every piece you send our way, we thank you with some cryptocurrency.
+             
+
+</p>
+          </div>
           </div>
           </div>
       </div>
