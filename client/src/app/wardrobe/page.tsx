@@ -1,20 +1,30 @@
 'use client'
-import React, {useState} from 'react';
+import React, { ChangeEvent, useState } from 'react';
 import Image from 'next/image';
 import { useUser } from '@auth0/nextjs-auth0/client';
 import Link from 'next/link';
+import Footer from '@/components/footer/footer';
 
 const Wardrobe = () => {
   const { user } = useUser();
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isCongratsModalOpen, setIsCongratsModalOpen] = useState(false);
   const [imagePreview1, setImagePreview1] = useState<string | null>(null);
   const [imagePreview2, setImagePreview2] = useState<string | null>(null);
   const [imageFile1, setImageFile1] = useState<File | null>(null);
   const [imageFile2, setImageFile2] = useState<File | null>(null);
   const [clothingName, setClothingName] = useState('');
-  const [labelDetails, setLabelDetails] = useState('');
+  const [labelInfo, setLabelInfo] = useState('');
   const [uploadStatus, setUploadStatus] = useState<string>('');
   const [loading, setLoading] = useState(false);
+
+  const [file, setFile] = useState<File | null>(null);
+  const [label, setLabel] = useState<File | null>(null);
+  const [itemDetails, setItemDetails] = useState([{ clothing_name: "", color: "", type: "", image_url: "" }]);
+  const [labelDetails, setLabelDetails] = useState([{image_url: ""}]);
+
+
+
 
   const handleImageChange = (
     e: React.ChangeEvent<HTMLInputElement>,
@@ -28,7 +38,7 @@ const Wardrobe = () => {
         setImagePreview(reader.result as string);
       };
       reader.readAsDataURL(file);
-      setImageFile(file); // Save file for upload
+      setImageFile(file);
     }
   };
 
@@ -52,33 +62,34 @@ const Wardrobe = () => {
     return await visionResponse.json();
   };
 
-  const uploadImages = async () => {
-    if (!imageFile1 || !imageFile2) {
-      setUploadStatus('Both images must be selected for upload.');
-      return;
-    }
 
-    setLoading(true);
-    setUploadStatus('Uploading...');
-    try {
-      const [clothingData, labelData] = await Promise.all([
-        uploadToAPI(imageFile1, 'http://127.0.0.1:5000/vision1'),
-        uploadToAPI(imageFile2, 'http://127.0.0.1:5000/vision2'),
-      ]);
+  // const uploadImages = async () => {
+  //   if (!imageFile1 || !imageFile2) {
+  //     setUploadStatus('Both images must be selected for upload.');
+  //     return;
+  //   }
 
-      setClothingName(clothingData[0]?.clothing_name || 'Unknown');
-      setLabelDetails(JSON.stringify(labelData) || 'No details');
-      setUploadStatus('Upload complete.');
-    } catch (error) {
-      console.error(error);
+  //   setLoading(true);
+  //   setUploadStatus('Uploading...');
+  //   try {
+  //     const [clothingData, labelData] = await Promise.all([
+  //       uploadToAPI(imageFile1, 'http://127.0.0.1:5000/vision1'),
+  //       uploadToAPI(imageFile2, 'http://127.0.0.1:5000/vision2'),
+  //     ]);
 
-      setUploadStatus('Error during upload.');
-    } finally {
-      setLoading(false);
-    }
-  };
+  //     setClothingName(clothingData[0]?.clothing_name || 'Unknown');
+  //     setLabelInfo(JSON.stringify(labelData) || 'No Info');
+  //     setUploadStatus('Upload complete.');
+  //   } catch (error) {
+  //     console.error(error);
 
-    
+  //     setUploadStatus('Error during upload.');
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
+
+
   const toBase64 = (file: File) =>
     new Promise((resolve, reject) => {
       const reader = new FileReader();
@@ -87,7 +98,108 @@ const Wardrobe = () => {
       reader.onerror = (error) => reject(error);
     });
 
+  const handleChange = async (e: ChangeEvent<HTMLInputElement>) => {
+    const selected = e.target.files && e.target.files[0];
+    setFile(selected);
+
+    if (selected) {
+      try {
+        const reader = new FileReader();
+        reader.readAsDataURL(selected);
+        reader.onloadend = async () => {
+          const base64Data = reader.result?.toString().split(',')[1];
+
+          const s3_res = await fetch('https://jeiq0otl56.execute-api.us-east-2.amazonaws.com/default/slo-images', {
+            method: 'POST',
+            body: JSON.stringify({ image: base64Data })
+          });
+
+          const s3_data = await s3_res.json();
+
+          const res = await fetch('http://localhost:5000/vision1', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ id: s3_data.id })
+          });
+
+          const data = await res.json();
+          setItemDetails(data);
+        };
+      } catch (err) {
+        console.log(err);
+      }
+    }
+  };
+
+  const handleChangeLabel = async (e: ChangeEvent<HTMLInputElement>) => {
+    const selected = e.target.files && e.target.files[0];
+    setLabel(selected);
+
+    if (selected) {
+      try {
+        const reader = new FileReader();
+        reader.readAsDataURL(selected);
+        reader.onloadend = async () => {
+          const base64Data = reader.result?.toString().split(',')[1];
+
+          const s3_res = await fetch('https://jeiq0otl56.execute-api.us-east-2.amazonaws.com/default/slo-images', {
+            method: 'POST',
+            body: JSON.stringify({ image: base64Data })
+          });
+
+          const s3_data = await s3_res.json();
+
+          const res = await fetch('http://localhost:5000/vision2', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ id: s3_data.id })
+          });
+
+          const data = await res.json();
+          setLabelDetails(data);
+        };
+      } catch (err) {
+        console.log(err);
+      }
+    }
+  };
+
+  const handleSubmitClothes = async () => {
+    if (itemDetails[0].image_url == "" || labelDetails[0].image_url == "" || !user) return
+    const formData = new FormData();
+    const id = user.email ? user.email : user.picture;
+
+    formData.append('email', id as string);
+    formData.append('name', itemDetails[0].clothing_name);
+    formData.append('color', itemDetails[0].color);
+    formData.append('type', itemDetails[0].type);
+    formData.append('image', itemDetails[0].image_url);
+    formData.append('label', JSON.stringify(labelDetails));
+
+    const res = await fetch('http://localhost:5000/add_clothes', {
+      method: 'POST',
+      body: formData
+    });
+
+    const get_coin = await fetch('http://localhost:5000/give_coin', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ wallet: "0xb3ebA584B5DD1F2eF5270e937c8248ac38F48727" })
+    });
+
+    setIsModalOpen(false)
+    setIsCongratsModalOpen(true);
+  }
+
+
   return (
+    <>
     <main className="flex min-h-screen flex-col items-center justify-center p-4 lg:p-24">
       <h1 className="text-2xl font-bold mb-8">{user?.name}'s Wardrobe</h1>
 
@@ -178,9 +290,10 @@ const Wardrobe = () => {
                 )}
                 <input
                   type="file"
-                  onChange={(e) => handleImageChange(e, setImagePreview1, setImageFile1)}
+                  onChange={(e) => { handleImageChange(e, setImagePreview1, setImageFile1), handleChange(e) }}
                   className="mb-2"
                 />
+                <p>Status: {itemDetails[0].image_url != "" ? "Done" : "No image selected"}</p>
               </div>
               <div className="flex-1">
                 <h3 className="text-md font-medium mb-2">Tag Image</h3>
@@ -191,9 +304,13 @@ const Wardrobe = () => {
                 )}
                 <input
                   type="file"
-                  onChange={(e) => handleImageChange(e, setImagePreview2, setImageFile2)}
+                  onChange={(e) => { handleImageChange(e, setImagePreview2, setImageFile2), handleChangeLabel(e) }}
                   className="mb-2"
                 />
+
+                <p>Status: {labelDetails[0].image_url != "" ? "Done" : "No image selected"}</p>
+
+
               </div>
             </div>
             <div className="flex justify-between">
@@ -203,20 +320,37 @@ const Wardrobe = () => {
               >
                 Cancel
               </button>
-              <button
-                onClick={uploadImages}
-                disabled={!imageFile1 || !imageFile2 || loading}
-                className={`bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ${loading ? 'cursor-not-allowed' : ''}`}
-              >
-                {loading ? 'Uploading...' : 'Upload'}
+              <button onClick={handleSubmitClothes} disabled={!imageFile1 || !imageFile2} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                Upload
               </button>
+              {loading ? <p>Loading...</p> : uploadStatus && <p>{uploadStatus}</p>}
               {clothingName && <p>Clothing Name: {clothingName}</p>}
-              {labelDetails && <p>Label Details: {labelDetails}</p>}
+              {labelInfo && <p>Label Details: {labelInfo}</p>}
             </div>
           </div>
         </div>
       )}
+
+      {/* Congrats Modal */}
+{isCongratsModalOpen && (
+  <div className="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm flex justify-center items-center">
+    <div className="bg-white p-4 rounded-lg flex flex-col items-center">
+      <h2 className="font-bold text-lg mb-4">Congratulations!</h2>
+      <Image src={require("../../../assets/slocoin.png")} alt="Coin" width={150} height={150} style={{margin:"20px"}} />
+      
+      <p><b>You earned +1 SloCoin.</b></p>
+      <button
+        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4"
+        onClick={() => setIsCongratsModalOpen(false)}
+      >
+        Close
+      </button>
+    </div>
+  </div>
+)}
     </main>
+    { isModalOpen? null : <Footer /> }
+    </>
   );
 };
 

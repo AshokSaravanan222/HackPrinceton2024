@@ -19,26 +19,31 @@ mongo_client = MongoClient(mongo_uri, server_api=ServerApi('1'))
 app = Flask(__name__)
 CORS(app)
 
-@app.route('/get_user', methods=['GET'])
-@cross_origin()
+@app.route('/get_user', methods=['POST'])
 def get_user():
-    email = request.args.get('email')
-    user = None
+    email = request.json['email']
+    user = "None"
     try:
         collection = mongo_client['slo']['users']
         user = collection.find_one({"email": email})
     except Exception as e:
         print(e)
+    if user is None:
+        return {"none": "None"}
+    
+    user['_id'] = str(user['_id'])
+
     return user
 
             
 @app.route('/add_user', methods=['POST'])
-@cross_origin()
 def add_user():
     email = request.json['email']
+    user_name = request.json['name']
+
     user= [{
         "email": email,
-        "name": "",
+        "name": user_name,
         "clothes": [],
         "wallet": "",
     }]
@@ -50,7 +55,6 @@ def add_user():
     return "User added"
 
 @app.route('/add_clothes', methods=['POST'])
-@cross_origin()
 def add_clothes():
     _email = request.form['email']
     _name = request.form['name']
@@ -72,6 +76,8 @@ def add_clothes():
         user = collection.find_one({"email": _email})
         clothes = user['clothes']
         clothes.append(clothesItem)
+        print(_email)
+        print(type(_email))
 
         collection.update_one(
             {"email": _email},
@@ -82,7 +88,6 @@ def add_clothes():
     return "Clothes added"
 
 @app.route('/delete_clothes', methods=['POST'])
-@cross_origin()
 def delete_clothes():
     _email = request.form['email']
     _item_url = request.form['item_url']
@@ -105,23 +110,21 @@ def delete_clothes():
         print(e)
     return "Clothes removed"
 
-@app.route('/update_user', methods=['POST'])
-@cross_origin()
-def update_user():
+@app.route('/update_wallet', methods=['POST'])
+def update_wallet():
     user = request.json['user']
     try:
         collection = mongo_client['slo']['users']
         collection.update_one(
             {"email": user['email']},
-            {"$set": {"name": user['name'], "wallet": user['wallet']}, "$currentDate": {"lastModified": True}},
-)
+            {"$set": {"wallet": user['wallet']}, "$currentDate": {"lastModified": True}},
+        )
     except Exception as e:
         print(e)
-    return "User updated"
+    return "Wallet updated"
 
 
 @app.route('/count_coins', methods=['POST'])
-@cross_origin()
 def count_coins():
     wallet = request.json['wallet']
     count = 0 
@@ -140,7 +143,6 @@ def count_coins():
     return str(count)
 
 @app.route('/give_coin', methods=['POST'])
-@cross_origin()
 def give_coin():
     wallet = request.get_json().get('wallet')
     url = "https://api.verbwire.com/v1/nft/data/owned?walletAddress=0x18FbEc1bF2b314261cad942150e731d8B057853A&chain=sepolia&tokenType=nft721&sortDirection=ASC&limit=1000&page=1"
@@ -187,7 +189,6 @@ def mint_coin(wallet):
 
 
 @app.route('/vision1', methods=['POST'])
-@cross_origin()
 def vision1():
     id = request.get_json().get('id')
     data = {"message": f"https://slo-fashion.s3.us-east-2.amazonaws.com/{id}.jpg"}
@@ -229,7 +230,6 @@ label: None
 
 
 @app.route('/vision2', methods=['POST'])
-@cross_origin()
 def vision2():
     id2 = request.get_json().get('id')
     data2 = {"message": f"https://slo-fashion.s3.us-east-2.amazonaws.com/{id2}.jpg"}

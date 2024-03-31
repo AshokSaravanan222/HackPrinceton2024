@@ -14,7 +14,7 @@ export default function WardrobeLayout({
       {/* Include shared UI here e.g. a header or sidebar */}
       <nav></nav>
       {children} {/* This is where the content of the page will be injected */}
-      <Footer /> {/* Footer added here, so it appears below the content */}
+      {/* <Footer /> Footer added here, so it appears below the content */}
     </section>
   )
 }

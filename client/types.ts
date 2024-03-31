@@ -17,6 +17,7 @@ type GridContainerProps = {
     id: number;
     name: string;
     cost: number;
+    coins: number;
     type: 'top' | 'bottom' | 'other';
   }
   

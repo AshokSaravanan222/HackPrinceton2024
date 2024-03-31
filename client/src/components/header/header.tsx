@@ -1,5 +1,5 @@
 'use client'
-import React, { useState } from 'react';
+import React, { use, useState, useEffect } from 'react';
 import { useUser } from '@auth0/nextjs-auth0/client';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -26,6 +26,40 @@ const Header: React.FC = () => {
         );
     }
   };
+
+  useEffect(() => {
+    if (user) {
+      
+      const id = user.email? user.email : user.picture;
+
+      console.log('User:', id);
+
+      const fetchUser = async () => {
+        try {
+          const response = await fetch('http://localhost:5000/get_user', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ email: id }) 
+          });
+
+          const data = await response.json();
+          if (data.none === "None") {
+            await fetch('http://localhost:5000/add_user', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify({ email: id, name: user.name }) 
+            });
+          }
+        } catch (error) {
+          console.error('Error fetching user:', error);
+        }
+      };
+      fetchUser();
+    }}, [user]);
 
   return (
     <>
