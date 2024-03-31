@@ -8,7 +8,6 @@
     "start": "next start",
     "lint": "next lint"
   },
-  "proxy": "http://127.0.0.1:5000",
   "dependencies": {
     "@auth0/nextjs-auth0": "^3.5.0",
     "next": "^14.1.4",
