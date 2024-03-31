@@ -8,7 +8,7 @@ const Upload = () => {
   const [file, setFile] = useState<File | null>(null);
   const [label, setLabel] = useState<File | null>(null);
 
-  const [itemDetails, setItemDetails] = useState([{clothing_name: "", color: "", image_url: ""}]);
+  const [itemDetails, setItemDetails] = useState([{clothing_name: "", color: "", type:"", image_url: ""}]);
   const [labelDetails, setLabelDetails] = useState({});
   
   // const [itemName, setItemName] = useState<string>("");
@@ -103,6 +103,7 @@ const Upload = () => {
     formData.append('email', 'example@mail.com'); // Replace with actual email
     formData.append('name', itemDetails[0].clothing_name);
     formData.append('color', itemDetails[0].color);
+    formData.append('type', itemDetails[0].type);
     formData.append('image', itemDetails[0].image_url);
     formData.append('label', JSON.stringify(labelDetails));
 
