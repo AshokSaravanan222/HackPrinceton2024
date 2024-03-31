@@ -34,18 +34,21 @@ const Header: React.FC = () => {
           {user ? (
             <>
               {renderIconForRoute()}
-              <div className="flex items-center cursor-pointer relative" onClick={() => setIsDropdownOpen(!isDropdownOpen)}>
+              <div className="flex items-center relative">
                 <Coin />
-                <img
-                  src={user.picture || 'path/to/default/avatar'}
-                  alt="Profile"
-                  className="w-10 h-10 rounded-full ml-4" // Increase the margin here
-                />
-                {isDropdownOpen && (
-                  <div className="absolute right-0 mt-12 w-48 bg-white shadow-md rounded-md py-2">
-                    <a href="/api/auth/logout" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Logout</a>
-                  </div>
-                )}
+                <div className="ml-4 cursor-pointer" onClick={() => setIsDropdownOpen(!isDropdownOpen)}>
+                  <img
+                    src={user.picture || 'path/to/default/avatar'}
+                    alt="Profile"
+                    className="w-10 h-10 rounded-full"
+                  />
+                  {isDropdownOpen && (
+                    // Adjust the positioning of the dropdown here
+                    <div className="absolute right-0 mt-2 w-48 bg-white shadow-md rounded-md py-2">
+                      <a href="/api/auth/logout" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Logout</a>
+                    </div>
+                  )}
+                </div>
               </div>
             </>
           ) : (
@@ -54,7 +57,7 @@ const Header: React.FC = () => {
         </div>
       </div>
     </>
-  );
+  );  
 };
 
 export default Header;

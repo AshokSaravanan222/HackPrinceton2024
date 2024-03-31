@@ -203,10 +203,13 @@ const Wardrobe = () => {
               >
                 Cancel
               </button>
-              <button onClick={uploadImages} disabled={!imageFile1 || !imageFile2} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                Upload
+              <button
+                onClick={uploadImages}
+                disabled={!imageFile1 || !imageFile2 || loading}
+                className={`bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ${loading ? 'cursor-not-allowed' : ''}`}
+              >
+                {loading ? 'Uploading...' : 'Upload'}
               </button>
-              {loading ? <p>Loading...</p> : uploadStatus && <p>{uploadStatus}</p>}
               {clothingName && <p>Clothing Name: {clothingName}</p>}
               {labelDetails && <p>Label Details: {labelDetails}</p>}
             </div>
