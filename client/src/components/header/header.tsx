@@ -18,6 +18,12 @@ const Header: React.FC = () => {
             <text className="px-4 py-2 bg-blue-500 text-white rounded-lg">Wardrobe</text>
           </Link>
         );
+      case '/shop':
+        return (
+          <Link href="/cart">
+            <text className="px-4 py-2 bg-blue-500 text-white rounded-lg">Cart</text>
+          </Link>
+        );
       default:
         return (
             <Link href="/">
