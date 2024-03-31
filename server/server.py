@@ -87,7 +87,7 @@ records = db.wardrobe_database
 # def api():
 #     return jsonify({'message': 'Hello, World!'})
 
-@app.route('/count_coins', methods=['GET'])
+@app.route('/count_coins', methods=['POST'])
 def count_coins():
     wallet = request.json['wallet']
     count = 0 
@@ -103,11 +103,11 @@ def count_coins():
         for nft in res_json["nfts"]:
             if nft['tokenSymbol'] == "SHOPTEST":
                 count += 1
-    return count
+    return str(count)
 
 @app.route('/give_coin', methods=['POST'])
 def give_coin():
-    wallet = request.json['wallet']
+    wallet = request.get_json().get('wallet')
     url = "https://api.verbwire.com/v1/nft/data/owned?walletAddress=0x18FbEc1bF2b314261cad942150e731d8B057853A&chain=sepolia&tokenType=nft721&sortDirection=ASC&limit=1000&page=1"
     headers = {
         "accept": "application/json",

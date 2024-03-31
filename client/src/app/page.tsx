@@ -30,7 +30,7 @@ export default function Home() {
 
           {/* Recycling Initiatives */}
           <Link href="/recycling-initiatives">
-            <div className="group rounded-full overflow-hidden relative w-64 h-64" style={{ position: 'relative', left: '10px', top: '80px' }}>
+            <div className="group rounded-full overflow-hidden relative w-64 h-64" style={{ position: 'relative', left: '20px', top: '40px' }}>
               <Image src={require("../../assets/recycling-initiative.jpg")} alt="Recycling Initiatives" className="w-full h-auto transition-transform group-hover:scale-105" />
               <div className="absolute inset-0 bg-black opacity-40 transition-opacity group-hover:opacity-60"></div>
               <div className="absolute inset-0 flex items-center justify-center">
@@ -41,7 +41,7 @@ export default function Home() {
 
           {/* Eco-friendly Products */}
           <Link href="/eco-friendly-products">
-            <div className="group rounded-full overflow-hidden relative w-64 h-64" style={{ position: 'relative', left: '0', top: '0' }}>
+            <div className="group rounded-full overflow-hidden relative w-64 h-64" style={{ position: 'relative', left: '10', top: '30' }}>
               <Image src={require("../../assets/Eco-friendly-fashion.jpg")} alt="Eco-friendly Fashion" className="w-full h-auto transition-transform group-hover:scale-105" />
               <div className="absolute inset-0 bg-black opacity-40 transition-opacity group-hover:opacity-60"></div>
               <div className="absolute inset-0 flex items-center justify-center">
@@ -51,8 +51,17 @@ export default function Home() {
           </Link>
           </div>
           </main>
+
+    <div className="bg-white w-full py-4 px-6 rounded-lg">
+      <div className="container mx-auto text-center">
+        <h2 className="text-xl text-black font-bold mb-2">About Us</h2>
+            <p className="text-base text-gray-700">Meet four enthusiast college students finding environmental, economical solution to the textile waste that is generated every year .</p>
+          </div>
+          </div>
       </div>
       </div>
 
+
+  
   );
 }
