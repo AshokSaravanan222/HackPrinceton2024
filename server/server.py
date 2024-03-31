@@ -1,4 +1,3 @@
-from pymongo import MongoClient
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 import requests
@@ -7,84 +6,112 @@ from dotenv import load_dotenv
 import os
 import json
 import base64
+from pymongo.mongo_client import MongoClient
+from pymongo.server_api import ServerApi
 
 load_dotenv()
 open_api_key = os.getenv("OPENAI_API_KEY")
 verb_api_key = os.getenv("VERBWIRE_API_KEY")
+mongo_uri = os.getenv("MONGODB_URI")
 
 open_client = OpenAI(api_key=open_api_key)
+mongo_client = MongoClient(mongo_uri, server_api=ServerApi('1'))
 app = Flask(__name__)
 CORS(app)
 
-# the mongodb database record
-client=MongoClient("mongodb+srv://hackprinceton:<password>@cluster0.vgfyxhl.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
+@app.route('/get_user', methods=['GET'])
+def get_user():
+    email = request.args.get('email')
+    user = None
+    try:
+        collection = mongo_client['slo']['users']
+        user = collection.find_one({"email": email})
+    except Exception as e:
+        print(e)
+    return user
 
-db = client.get_database('wardrobe_record')
+            
+@app.route('/add_user', methods=['POST'])
+def add_user():
+    email = request.json['email']
+    user= [{
+        "email": email,
+        "name": "",
+        "clothes": [],
+        "wallet": "",
+    }]
+    try:
+        collection = mongo_client['slo']['users']
+        collection.insert_many(user)
+    except Exception as e:
+        print(e)
+    return "User added"
 
-records = db.wardrobe_database
+@app.route('/add_clothes', methods=['POST'])
+def add_clothes():
+    _email = request.form['email']
+    _name = request.form['name']
+    _color = request.form['color']
+    _image_url = request.form['image']
+    _label = json.loads(request.form['label'])
 
-# class ClothingItem:
-#     def __init__(self, name, material, sustainability, brand):
-#         self.name=name
-#         self.material=material
-#         self.sustainability=sustainability
-#         self.brand=brand
+    clothesItem = {
+        "name": _name,
+        "color": _color,
+        "image": _image_url,
+        "label": _label
+    }
 
-# class Wardrobe:
-#     def __init__(self):
-#         self.inventory=[]
+    try:
+        collection = mongo_client['slo']['users']
+        user = collection.find_one({"email": _email})
+        clothes = user['clothes']
+        clothes.append(clothesItem)
 
-#     def add_item(self, item):
-#         self. inventory.append(item)
+        collection.update_one(
+            {"email": _email},
+            {"$set": {"clothes": clothes}, "$currentDate": {"lastModified": True}},
+        )
+    except Exception as e:
+        print(e)
+    return "Clothes added"
 
-#     def remove_item(self, item):
-#         self.inventory.remove(item)
+@app.route('/delete_clothes', methods=['POST'])
+def delete_clothes():
+    _email = request.form['email']
+    _item_url = request.form['item_url']
 
-#     def check_sustainability(self, item):
-#         if item.sustainability=="sustainability":
-#             return "Keep"
-#         elif item.sustainability=="recyclable":
-#             return "Recycle"
-#         elif item.sustainability=="non-sustainable":
-#             return "Send it to us"
-        
-#     def recycle_item(self, item):
-#         if item.sustainability=="recyclable":
-#             recycling_response=self.send_to_recycling_center(item)
-#             return recycling_response
-#         else:
-#             return "Item is not recyclable"
-        
-    
-# wardrobe=Wardrobe()
+    try:
+        collection = mongo_client['slo']['users']
+        user = collection.find_one({"email": _email})
+        clothes = user['clothes']
 
-# @app.route('/wardrobe/add_item', method=['POST'])
-# def add_item():
-#     data=request.json
-#     item=ClothingItem(data['name'], data['material'], data['sustainability'], data['brand'])
-#     wardrobe.add_item(item)
-#     return jsonify({'message':'Item added to wardrobe successfully'})
+        for item in clothes:
+            if item['image'] == _item_url:
+                clothes.remove(item)
+                break
 
+        collection.update_one(
+            {"email": _email},
+            {"$set": {"clothes": clothes}, "$currentDate": {"lastModified": True}},
+        )
+    except Exception as e:
+        print(e)
+    return "Clothes removed"
 
-# @app.route('/wardrobe/check_sustainability', methods=['POST'])
-# def check_sustainability():
-#     data=request.json
-#     item=ClothingItem(data['name'], data['material'], data['sustainability'], data['brand'])
-#     sustainability_action=wardrobe.check_sustainability(item)
-#     return jsonify({'sustainability_action': sustainability_action})
+@app.route('/update_user', methods=['POST'])
+def update_user():
+    user = request.json['user']
+    try:
+        collection = mongo_client['slo']['users']
+        collection.update_one(
+            {"email": user['email']},
+            {"$set": {"name": user['name'], "wallet": user['wallet']}, "$currentDate": {"lastModified": True}},
+)
+    except Exception as e:
+        print(e)
+    return "User updated"
 
-# @app.route('/wardrobe/recycle_item', methods=['POST'])
-# def recycle_item():
-#     data=request.json
-#     item=ClothingItem(data['name'], data['material'], data['sustainability'], data['brand'])
-#     recycling_response=wardrobe.recycle_item(item)
-#     return jsonify({'recycling_response':recycling_response})
-
-
-
-# @app.route('/api')
-# def api():
-#     return jsonify({'message': 'Hello, World!'})
 
 @app.route('/count_coins', methods=['POST'])
 def count_coins():
@@ -161,10 +188,12 @@ def vision1():
             "role": "user",
             "content": [
                 {"type": "text", "text":
-"""This is an image of a piece of clothing. Give it a simple but descriptive name as well as save the overall hexadecimal color of the clothing item.
+f"""This is an image of a piece of clothing. Give it a simple but descriptive name as well as save the overall hexadecimal color of the clothing item.
 Format the output as JSON surrounded by square brackets with following keys:
 clothing_name
-color           
+color 
+image_url: https://slo-fashion.s3.us-east-2.amazonaws.com/{id}.jpg
+label: None        
 """},
                 {
                 "type": "image_url",
@@ -200,13 +229,15 @@ def vision2():
             "role": "user",
             "content": [
                 {"type": "text", "text":
-"""This is an image of a clothing label. What are the materials used to make this clothing item?
+f"""This is an image of a clothing label. What are the materials used to make this clothing item?
 Also, you are a sustainability expert. Analyze sustainability of and rate out of 10 the following clothing material(s).
 Format the output as JSON with each material as its own object with the following keys:
 material_name
 material_percentage  
 sustainability_rating
-sustainability_description          
+sustainability_description
+image_url: https://slo-fashion.s3.us-east-2.amazonaws.com/{id2}.jpg          
+
 """},
                 {
                 "type": "image_url",
