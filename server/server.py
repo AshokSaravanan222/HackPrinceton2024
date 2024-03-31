@@ -1,5 +1,5 @@
 from flask import Flask, request, jsonify
-from flask_cors import CORS
+from flask_cors import CORS, cross_origin
 import requests
 from openai import OpenAI
 from dotenv import load_dotenv
@@ -20,6 +20,7 @@ app = Flask(__name__)
 CORS(app)
 
 @app.route('/get_user', methods=['GET'])
+@cross_origin()
 def get_user():
     email = request.args.get('email')
     user = None
@@ -32,6 +33,7 @@ def get_user():
 
             
 @app.route('/add_user', methods=['POST'])
+@cross_origin()
 def add_user():
     email = request.json['email']
     user= [{
@@ -48,6 +50,7 @@ def add_user():
     return "User added"
 
 @app.route('/add_clothes', methods=['POST'])
+@cross_origin()
 def add_clothes():
     _email = request.form['email']
     _name = request.form['name']
@@ -77,6 +80,7 @@ def add_clothes():
     return "Clothes added"
 
 @app.route('/delete_clothes', methods=['POST'])
+@cross_origin()
 def delete_clothes():
     _email = request.form['email']
     _item_url = request.form['item_url']
@@ -100,6 +104,7 @@ def delete_clothes():
     return "Clothes removed"
 
 @app.route('/update_user', methods=['POST'])
+@cross_origin()
 def update_user():
     user = request.json['user']
     try:
@@ -114,6 +119,7 @@ def update_user():
 
 
 @app.route('/count_coins', methods=['POST'])
+@cross_origin()
 def count_coins():
     wallet = request.json['wallet']
     count = 0 
@@ -132,6 +138,7 @@ def count_coins():
     return str(count)
 
 @app.route('/give_coin', methods=['POST'])
+@cross_origin()
 def give_coin():
     wallet = request.get_json().get('wallet')
     url = "https://api.verbwire.com/v1/nft/data/owned?walletAddress=0x18FbEc1bF2b314261cad942150e731d8B057853A&chain=sepolia&tokenType=nft721&sortDirection=ASC&limit=1000&page=1"
@@ -178,6 +185,7 @@ def mint_coin(wallet):
 
 
 @app.route('/vision1', methods=['POST'])
+@cross_origin()
 def vision1():
     id = request.get_json().get('id')
     data = {"message": f"https://slo-fashion.s3.us-east-2.amazonaws.com/{id}.jpg"}
@@ -218,6 +226,7 @@ label: None
 
 
 @app.route('/vision2', methods=['POST'])
+@cross_origin()
 def vision2():
     id2 = request.get_json().get('id')
     data2 = {"message": f"https://slo-fashion.s3.us-east-2.amazonaws.com/{id2}.jpg"}
