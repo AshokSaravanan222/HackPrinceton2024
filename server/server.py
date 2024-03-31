@@ -36,9 +36,11 @@ def get_user():
 @cross_origin()
 def add_user():
     email = request.json['email']
+    user_name = request.json['name']
+
     user= [{
         "email": email,
-        "name": "",
+        "name": user_name,
         "clothes": [],
         "wallet": "",
     }]
@@ -105,19 +107,19 @@ def delete_clothes():
         print(e)
     return "Clothes removed"
 
-@app.route('/update_user', methods=['POST'])
+@app.route('/update_wallet', methods=['POST'])
 @cross_origin()
-def update_user():
+def update_wallet():
     user = request.json['user']
     try:
         collection = mongo_client['slo']['users']
         collection.update_one(
             {"email": user['email']},
-            {"$set": {"name": user['name'], "wallet": user['wallet']}, "$currentDate": {"lastModified": True}},
+            {"$set": {"wallet": user['wallet']}, "$currentDate": {"lastModified": True}},
 )
     except Exception as e:
         print(e)
-    return "User updated"
+    return "Wallet updated"
 
 
 @app.route('/count_coins', methods=['POST'])
