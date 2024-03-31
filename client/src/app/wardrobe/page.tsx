@@ -78,7 +78,6 @@ const Wardrobe = () => {
     }
   };
 
-
     
   const toBase64 = (file: File) =>
     new Promise((resolve, reject) => {
