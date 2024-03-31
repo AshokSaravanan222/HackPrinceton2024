@@ -62,8 +62,8 @@ const Wardrobe = () => {
     setUploadStatus('Uploading...');
     try {
       const [clothingData, labelData] = await Promise.all([
-        uploadToAPI(imageFile1, 'http://localhost:5000/vision1'),
-        uploadToAPI(imageFile2, 'http://localhost:5000/vision2'),
+        uploadToAPI(imageFile1, 'http://127.0.0.1:5000/vision1'),
+        uploadToAPI(imageFile2, 'http://127.0.0.1:5000/vision2'),
       ]);
 
       setClothingName(clothingData[0]?.clothing_name || 'Unknown');
@@ -77,7 +77,6 @@ const Wardrobe = () => {
       setLoading(false);
     }
   };
-
 
     
   const toBase64 = (file: File) =>
@@ -145,6 +144,24 @@ const Wardrobe = () => {
         </Link>
 
         {/* Add more cards as needed */}
+        <Link
+          href="/clothes/other"
+          className="group block rounded-lg overflow-hidden shadow-lg hover:shadow-2xl transition-shadow duration-300"
+        >
+          <Image
+            src={require("../../../assets/other.jpg")}
+            alt="Learn"
+            className="w-full h-64 object-cover"
+          />
+          <div className="p-5">
+            <h2 className="mb-3 text-xl font-semibold">
+              Other <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">-&gt;</span>
+            </h2>
+            <p className="text-sm opacity-75">
+              Explore clothes that are miscellaneous.
+            </p>
+          </div>
+        </Link>
       </div>
 
       {isModalOpen && (

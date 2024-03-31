@@ -57,12 +57,10 @@ export default function Home() {
         <h2 className="text-xl text-black font-bold mb-2">About Us</h2>
         <div className="overflow-auto max-h-32" style={{ scrollbarWidth: 'thin' }}>
             <p className="text-base text-gray-700">Slo-Fashion, created by four enthusiastic college students, is dedicated to solve the fashion landfill waste problem and making recycling more convenient. We've made it our mission to collect your used outfits and get them into the hands of eco-friendly brands that give them a second chance. And here's the cool part: for every piece you send our way, we thank you with some cryptocurrency.
-             
-
-</p>
-          </div>
-          </div>
-          </div>
+          </p>
+        </div>
+      </div>
+      </div>
       </div>
       </div>
 
