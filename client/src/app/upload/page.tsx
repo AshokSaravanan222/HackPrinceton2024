@@ -1,12 +1,16 @@
 'use client'
 
 import React from 'react'
+import { useUser } from '@auth0/nextjs-auth0/client';
 import { useState, ChangeEvent, useEffect } from 'react'
 
 const Upload = () => {
   let setup = false;
   const [file, setFile] = useState<File | null>(null);
   const [label, setLabel] = useState<File | null>(null);
+
+  const { user } = useUser();
+
 
   const [itemDetails, setItemDetails] = useState([{clothing_name: "", color: "", type:"", image_url: ""}]);
   const [labelDetails, setLabelDetails] = useState({});
@@ -20,7 +24,7 @@ const Upload = () => {
   // const [materialRank, setMaterialRank] = useState<string>("");
   // const [materialDesc, setMaterialDesc] = useState<string>("");
   // const [materialImage, setMaterialImage] = useState<string>("");
-  const [user, setUser] = useState({});
+  // const [user, setUser] = useState({});
 
   const [coins, setCoins] = useState<string>("-1");
 
@@ -98,9 +102,11 @@ const Upload = () => {
   };
 
   const handleSubmitClothes = async () => {
-    if (!itemDetails || !labelDetails) return
+    if (!itemDetails || !labelDetails || !user) return
     const formData = new FormData();
-    formData.append('email', 'example@mail.com'); // Replace with actual email
+    const id = user.email? user.email : user.picture;
+
+    formData.append('email', id as string); 
     formData.append('name', itemDetails[0].clothing_name);
     formData.append('color', itemDetails[0].color);
     formData.append('type', itemDetails[0].type);
