@@ -9,8 +9,8 @@ export default function ShopLayout({
   children: React.ReactNode
 }) {
   return (
-    <section>
-    <Header />
+    <section >
+    <Header/>
       {/* Include shared UI here e.g. a header or sidebar */}
       <nav></nav>
       {children} {/* This is where the content of the page will be injected */}

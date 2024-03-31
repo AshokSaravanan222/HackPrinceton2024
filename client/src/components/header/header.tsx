@@ -36,7 +36,7 @@ const Header: React.FC = () => {
 
       const fetchUser = async () => {
         try {
-          const response = await fetch('http://localhost:5000/get_user', {
+          const response = await fetch('http://127.0.0.1:5000/get_user', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json'
@@ -46,7 +46,7 @@ const Header: React.FC = () => {
 
           const data = await response.json();
           if (data.none === "None") {
-            await fetch('http://localhost:5000/add_user', {
+            await fetch('http://127.0.0.1:5000/add_user', {
               method: 'POST',
               headers: {
                 'Content-Type': 'application/json'
@@ -63,7 +63,7 @@ const Header: React.FC = () => {
 
   return (
     <>
-      <div className="fixed inset-x-0 top-0 p-4 bg-gray-200 shadow-md">
+      <div className="fixed inset-x-0 top-0 p-4 bg-gray-200 shadow-md z-50">
         <div className="flex justify-between items-center">
           {user ? (
             <>

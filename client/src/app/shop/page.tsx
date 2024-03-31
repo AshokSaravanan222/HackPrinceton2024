@@ -5,7 +5,7 @@ import GridContainer from "../../components/shopGrid/GridContainer";
 const Shop = () => {
   const items = [
     {
-      href: '/clothes/tops',
+      href: '/shop',
       imgSrc: require("../../../assets/bottom.jpg"),
       altText: 'Tops',
       title: 'Tops',
@@ -81,7 +81,7 @@ const Shop = () => {
 
       {/* Grid Container (Main content) */}
       {/* Apply flex-grow for this section to take up all available space */}
-      <div className="flex-grow overflow-auto">
+      <div className="flex-grow pt-[4rem] overflow-auto"> {/* Adjust pt-[4rem] based on your header's actual height */}
         <GridContainer items={items} />
       </div>
 

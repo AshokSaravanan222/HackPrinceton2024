@@ -116,7 +116,7 @@ const Wardrobe = () => {
 
           const s3_data = await s3_res.json();
 
-          const res = await fetch('http://localhost:5000/vision1', {
+          const res = await fetch('http://127.0.0.1:5000/vision1', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json'
@@ -151,7 +151,7 @@ const Wardrobe = () => {
 
           const s3_data = await s3_res.json();
 
-          const res = await fetch('http://localhost:5000/vision2', {
+          const res = await fetch('http://127.0.0.1:5000/vision2', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json'
@@ -180,12 +180,12 @@ const Wardrobe = () => {
     formData.append('image', itemDetails[0].image_url);
     formData.append('label', JSON.stringify(labelDetails));
 
-    const res = await fetch('http://localhost:5000/add_clothes', {
+    const res = await fetch('http://127.0.0.1:5000/add_clothes', {
       method: 'POST',
       body: formData
     });
 
-    const get_coin = await fetch('http://localhost:5000/give_coin', {
+    const get_coin = await fetch('http://127.0.0.1:5000/give_coin', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'

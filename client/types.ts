@@ -20,6 +20,14 @@ type GridContainerProps = {
     coins: number;
     type: 'top' | 'bottom' | 'other';
   }
+
+  type CartItem = { 
+    href: string,
+     imgSrc: StaticImageData,
+     altText: string,
+     title: string,
+     description: string}
+  
   
 
-export type { GridItemProps, GridContainerProps, ClothingItem};
+export type { GridItemProps, GridContainerProps, ClothingItem, CartItem};
