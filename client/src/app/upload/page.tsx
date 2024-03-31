@@ -61,7 +61,6 @@ const Upload = () => {
             method: 'POST',
             body: JSON.stringify({ image: base64Data })
           });
-
           
           const s3_data = await s3_res.json();
   

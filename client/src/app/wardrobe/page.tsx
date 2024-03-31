@@ -9,10 +9,17 @@ const Wardrobe = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [imagePreview1, setImagePreview1] = useState<string | null>(null);
   const [imagePreview2, setImagePreview2] = useState<string | null>(null);
+  const [imageFile1, setImageFile1] = useState<File | null>(null);
+  const [imageFile2, setImageFile2] = useState<File | null>(null);
+  const [clothingName, setClothingName] = useState('');
+  const [labelDetails, setLabelDetails] = useState('');
+  const [uploadStatus, setUploadStatus] = useState<string>('');
+  const [loading, setLoading] = useState(false);
 
   const handleImageChange = (
     e: React.ChangeEvent<HTMLInputElement>,
-    setImagePreview: React.Dispatch<React.SetStateAction<string | null>>
+    setImagePreview: React.Dispatch<React.SetStateAction<string | null>>,
+    setImageFile: React.Dispatch<React.SetStateAction<File | null>>
   ) => {
     const file = e.target.files ? e.target.files[0] : null;
     if (file) {
@@ -21,8 +28,65 @@ const Wardrobe = () => {
         setImagePreview(reader.result as string);
       };
       reader.readAsDataURL(file);
+      setImageFile(file); // Save file for upload
     }
   };
+
+  const uploadToAPI = async (file: File, visionApiUrl: string) => {
+    const base64Data = await toBase64(file);
+    const uploadResponse = await fetch('https://jeiq0otl56.execute-api.us-east-2.amazonaws.com/default/slo-images', {
+      method: 'POST',
+      body: JSON.stringify({ image: base64Data })
+    });
+
+    if (!uploadResponse.ok) throw new Error('Failed to upload to S3');
+    const { id } = await uploadResponse.json();
+
+    const visionResponse = await fetch(visionApiUrl, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ id }),
+    });
+
+    if (!visionResponse.ok) throw new Error('Failed to process image');
+    return await visionResponse.json();
+  };
+
+  const uploadImages = async () => {
+    if (!imageFile1 || !imageFile2) {
+      setUploadStatus('Both images must be selected for upload.');
+      return;
+    }
+
+    setLoading(true);
+    setUploadStatus('Uploading...');
+    try {
+      const [clothingData, labelData] = await Promise.all([
+        uploadToAPI(imageFile1, 'http://localhost:5000/vision1'),
+        uploadToAPI(imageFile2, 'http://localhost:5000/vision2'),
+      ]);
+
+      setClothingName(clothingData[0]?.clothing_name || 'Unknown');
+      setLabelDetails(JSON.stringify(labelData) || 'No details');
+      setUploadStatus('Upload complete.');
+    } catch (error) {
+      console.error(error);
+
+      setUploadStatus('Error during upload.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+
+    
+  const toBase64 = (file: File) =>
+    new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result?.toString().split(',')[1] as any);
+      reader.onerror = (error) => reject(error);
+    });
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-center p-4 lg:p-24">
@@ -97,7 +161,7 @@ const Wardrobe = () => {
                 )}
                 <input
                   type="file"
-                  onChange={(e) => handleImageChange(e, setImagePreview1)}
+                  onChange={(e) => handleImageChange(e, setImagePreview1, setImageFile1)}
                   className="mb-2"
                 />
               </div>
@@ -110,7 +174,7 @@ const Wardrobe = () => {
                 )}
                 <input
                   type="file"
-                  onChange={(e) => handleImageChange(e, setImagePreview2)}
+                  onChange={(e) => handleImageChange(e, setImagePreview2, setImageFile2)}
                   className="mb-2"
                 />
               </div>
@@ -122,15 +186,12 @@ const Wardrobe = () => {
               >
                 Cancel
               </button>
-              <button
-                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                onClick={() => {
-                  // Handle the upload logic for both images
-                  setIsModalOpen(false);
-                }}
-              >
+              <button onClick={uploadImages} disabled={!imageFile1 || !imageFile2} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                 Upload
               </button>
+              {loading ? <p>Loading...</p> : uploadStatus && <p>{uploadStatus}</p>}
+              {clothingName && <p>Clothing Name: {clothingName}</p>}
+              {labelDetails && <p>Label Details: {labelDetails}</p>}
             </div>
           </div>
         </div>
