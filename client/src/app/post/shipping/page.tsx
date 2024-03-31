@@ -1,8 +1,13 @@
-// Assuming your page component path is ./src/app/recycle/page.tsx
 import React from 'react';
+import Image from 'next/image';
 
 const ShippingPage = () => {
-    return <div>Hello world</div>
+    return (
+        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+            <Image src={require("../../../../assets/shipping_label.png")} alt="placeholder" />
+        </div>
+    );
 };
 
 export default ShippingPage;
+
