@@ -39,7 +39,7 @@ const Header: React.FC = () => {
                 <img
                   src={user.picture || 'path/to/default/avatar'}
                   alt="Profile"
-                  className="w-10 h-10 rounded-full ml-2" // Added ml-2 for spacing between the coin and the profile image
+                  className="w-10 h-10 rounded-full ml-4" // Increase the margin here
                 />
                 {isDropdownOpen && (
                   <div className="absolute right-0 mt-12 w-48 bg-white shadow-md rounded-md py-2">
