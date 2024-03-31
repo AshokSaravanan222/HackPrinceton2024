@@ -9,12 +9,13 @@ interface ClothingItem extends ImportedClothingItem {
 }
 
 const Recycle = () => {
+  const cost = Math.floor(Math.random() * 20) + 1;
   const [clothingItems, setClothingItems] = useState<ClothingItem[]>([
-    { id: 1, name: "Cotton T-Shirt", cost: Math.floor(Math.random() * 20) + 1, type: "top", isRecycled: false },
-    { id: 2, name: "Denim Jeans", cost: Math.floor(Math.random() * 20) + 1, type: "bottom", isRecycled: false },
-    { id: 3, name: "Linen Blouse", cost: Math.floor(Math.random() * 20) + 1, type: "top", isRecycled: false },
-    { id: 4, name: "Running Shorts", cost: Math.floor(Math.random() * 20) + 1, type: "bottom", isRecycled: false },
-    { id: 5, name: "Wool Scarf", cost: Math.floor(Math.random() * 20) + 1, type: "other", isRecycled: false },
+    { id: 1, name: "Cotton T-Shirt", cost: cost, coins: Math.floor(cost / 2), type: "top", isRecycled: false },
+    { id: 2, name: "Denim Jeans", cost: cost, coins: Math.floor(cost / 2), type: "bottom", isRecycled: false },
+    { id: 3, name: "Linen Blouse", cost: cost, coins: Math.floor(cost / 2), type: "top", isRecycled: false },
+    { id: 4, name: "Running Shorts", cost: cost, coins: Math.floor(cost / 2), type: "bottom", isRecycled: false },
+    { id: 5, name: "Wool Scarf", cost: cost, coins: Math.floor(cost / 2), type: "other", isRecycled: false },
   ]);
 
   const toggleRecycled = (id: number) => {
@@ -32,6 +33,7 @@ const Recycle = () => {
             <th className="px-6 py-3">Name</th>
             <th className="px-6 py-3">Cost ($)</th>
             <th className="px-6 py-3">Type</th>
+            <th className="px-6 py-3">Slocoin</th> {/* New column for Slocoin */}
             <th className="px-6 py-3">Recycle</th>
           </tr>
         </thead>
@@ -45,6 +47,7 @@ const Recycle = () => {
               <td className="px-6 py-4">{item.name}</td>
               <td className="px-6 py-4">{`$${item.cost}`}</td>
               <td className="px-6 py-4 capitalize">{item.type}</td>
+              <td className="px-6 py-4">{item.coins}</td> {/* Displaying Slocoin value */}
               <td className="px-6 py-4">
                 <input
                   type="checkbox"
@@ -59,12 +62,11 @@ const Recycle = () => {
           ))}
         </tbody>
       </table>
-      <Link href="/post/shipping" className={'mt-4 px-6 py-2 rounded-full text-lg bg-teal-700 text-white'}>
-        <text>Process</text>
+      <Link href="/post/shipping" className="mt-4 px-6 py-2 rounded-full text-lg bg-teal-700 text-white">
+        Process
       </Link>
     </main>
   );
 };
 
 export default Recycle;
-
