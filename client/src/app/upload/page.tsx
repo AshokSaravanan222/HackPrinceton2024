@@ -26,7 +26,6 @@ const Upload = () => {
             method: 'POST',
             body: JSON.stringify({ image: base64Data })
           });
-
           
           const s3_data = await s3_res.json();
   
@@ -85,10 +84,7 @@ const Upload = () => {
 
   const handleSubmit = async () => {
     if (!file) return
-
     const formData = new FormData()
-
-
   }
 
 
