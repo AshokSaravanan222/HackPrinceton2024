@@ -1,0 +1,163 @@
+[
+    {
+      "imagelink": "https://via.placeholder.com/150",
+      "name": "Cotton T-Shirt",
+      "price": 25,
+      "type": "tops",
+      "seller": "EcoWear",
+      "sustainability": 8
+    },
+    {
+      "imagelink": "https://via.placeholder.com/150",
+      "name": "Denim Jeans",
+      "price": 60,
+      "type": "bottoms",
+      "seller": "DenimRevolution",
+      "sustainability": 6
+    },
+    {
+      "imagelink": "https://via.placeholder.com/150",
+      "name": "Linen Blouse",
+      "price": 45,
+      "type": "tops",
+      "seller": "NatureThreads",
+      "sustainability": 9
+    },
+    {
+      "imagelink": "https://via.placeholder.com/150",
+      "name": "Wool Scarf",
+      "price": 35,
+      "type": "other",
+      "seller": "WarmAndCozy",
+      "sustainability": 7
+    },
+    {
+      "imagelink": "https://via.placeholder.com/150",
+      "name": "Leather Belt",
+      "price": 40,
+      "type": "other",
+      "seller": "BeltCrafters",
+      "sustainability": 3
+    },
+    {
+      "imagelink": "https://via.placeholder.com/150",
+      "name": "Running Shorts",
+      "price": 30,
+      "type": "bottoms",
+      "seller": "ActiveWear",
+      "sustainability": 5
+    },
+    {
+      "imagelink": "https://via.placeholder.com/150",
+      "name": "Silk Dress",
+      "price": 120,
+      "type": "other",
+      "seller": "ElegantEvenings",
+      "sustainability": 4
+    },
+    {
+      "imagelink": "https://via.placeholder.com/150",
+      "name": "Cashmere Sweater",
+      "price": 100,
+      "type": "tops",
+      "seller": "LuxuryKnits",
+      "sustainability": 7
+    },
+    {
+      "imagelink": "https://via.placeholder.com/150",
+      "name": "Baseball Cap",
+      "price": 20,
+      "type": "other",
+      "seller": "CapItOff",
+      "sustainability": 5
+    },
+    {
+      "imagelink": "https://via.placeholder.com/150",
+      "name": "Khaki Trousers",
+      "price": 55,
+      "type": "bottoms",
+      "seller": "ClassicCuts",
+      "sustainability": 6
+    },
+    {
+      "imagelink": "https://via.placeholder.com/150",
+      "name": "Floral Skirt",
+      "price": 50,
+      "type": "bottoms",
+      "seller": "SpringBloom",
+      "sustainability": 8
+    },
+    {
+      "imagelink": "https://via.placeholder.com/150",
+      "name": "Graphic Tee",
+      "price": 30,
+      "type": "tops",
+      "seller": "TeeTrendz",
+      "sustainability": 7
+    },
+    {
+      "imagelink": "https://via.placeholder.com/150",
+      "name": "Bamboo Socks",
+      "price": 15,
+      "type": "other",
+      "seller": "EcoFeet",
+      "sustainability": 9
+    },
+    {
+      "imagelink": "https://via.placeholder.com/150",
+      "name": "Yoga Pants",
+      "price": 65,
+      "type": "bottoms",
+      "seller": "ZenWear",
+      "sustainability": 8
+    },
+    {
+      "imagelink": "https://via.placeholder.com/150",
+      "name": "Beanie Hat",
+      "price": 25,
+      "type": "other",
+      "seller": "HeadWarmers",
+      "sustainability": 6
+    },
+    {
+      "imagelink": "https://via.placeholder.com/150",
+      "name": "Chino Shorts",
+      "price": 40,
+      "type": "bottoms",
+      "seller": "SummerEssentials",
+      "sustainability": 5
+    },
+    {
+      "imagelink": "https://via.placeholder.com/150",
+      "name": "Puffer Jacket",
+      "price": 150,
+      "type": "tops",
+      "seller": "WinterGear",
+      "sustainability": 4
+    },
+    {
+      "imagelink": "https://via.placeholder.com/150",
+      "name": "Swim Trunks",
+      "price": 35,
+      "type": "bottoms",
+      "seller": "WaveRiders",
+      "sustainability": 7
+    },
+    {
+      "imagelink": "https://via.placeholder.com/150",
+      "name": "Sundress",
+      "price": 90,
+      "type": "other",
+      "seller": "SunshineFashions",
+      "sustainability": 8
+    },
+    {
+      "imagelink": "https://via.placeholder.com/150",
+      "name": "Athletic Tank Top",
+      "price": 25,
+      "type": "tops",
+      "seller": "GymPros",
+      "sustainability": 6
+    }
+  ]
+  
